@@ -2,6 +2,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useRef, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+import dotenv from "dotenv";
+dotenv.config();
 const manager = () => {
   const eyebtn = useRef("");
   const [eye, setEye] = useState(true);
@@ -9,7 +11,7 @@ const manager = () => {
   const [passwordArray, setpasswordArray] = useState([]);
 
   const getPasswords = async () => {
-    let req = await fetch("http://localhost:3000/auth");
+    let req = await fetch(process.env.URL);
     const result = await req.json();
     setpasswordArray(result.data);
   };
@@ -33,7 +35,7 @@ const manager = () => {
 
   const savePassword = async () => {
     setpasswordArray([...passwordArray]);
-    const res = await fetch("http://localhost:3000/auth", {
+    const res = await fetch(process.env.URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form }),
@@ -65,7 +67,7 @@ const manager = () => {
 
   const onDelete = async (id) => {
     setpasswordArray(passwordArray.filter((item) => item._id !== id));
-    const res = await fetch("http://localhost:3000/auth", {
+    const res = await fetch(process.env.URL, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
