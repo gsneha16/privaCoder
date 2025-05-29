@@ -11,7 +11,7 @@ const manager = () => {
   const [passwordArray, setpasswordArray] = useState([]);
 
   const getPasswords = async () => {
-    let req = await fetch(process.env.URL);
+    let req = await fetch(process.env.URL/auth);
     const result = await req.json();
     setpasswordArray(result.data);
   };
@@ -35,7 +35,7 @@ const manager = () => {
 
   const savePassword = async () => {
     setpasswordArray([...passwordArray]);
-    const res = await fetch(process.env.URL, {
+    const res = await fetch(process.env.URL/auth, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form }),
@@ -67,7 +67,7 @@ const manager = () => {
 
   const onDelete = async (id) => {
     setpasswordArray(passwordArray.filter((item) => item._id !== id));
-    const res = await fetch(process.env.URL, {
+    const res = await fetch(process.env.URL/auth, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
