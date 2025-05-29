@@ -1,8 +1,9 @@
+import { v4 as uuidv4 } from "uuid";
 import { useRef, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-import dotenv from "dotenv";
-dotenv.config();
+const apiUrl = import.meta.env.VITE_API_URL
+
 const manager = () => {
   const eyebtn = useRef("");
   const [eye, setEye] = useState(true);
@@ -10,7 +11,7 @@ const manager = () => {
   const [passwordArray, setpasswordArray] = useState([]);
 
   const getPasswords = async () => {
-    let req = await fetch(process.env.URL/auth);
+    let req = await fetch(`${apiUrl}/auth`);
     const result = await req.json();
     setpasswordArray(result.data);
   };
@@ -34,7 +35,7 @@ const manager = () => {
 
   const savePassword = async () => {
     setpasswordArray([...passwordArray]);
-    const res = await fetch(process.env.URL/auth, {
+    const res = await fetch(`${apiUrl}/auth`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...form }),
@@ -66,7 +67,7 @@ const manager = () => {
 
   const onDelete = async (id) => {
     setpasswordArray(passwordArray.filter((item) => item._id !== id));
-    const res = await fetch(process.env.URL/auth, {
+    const res = await fetch(`${apiUrl}/auth`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
