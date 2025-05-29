@@ -3,7 +3,7 @@
     "builds":[
         {
             "src":"server.js",
-            "use":"vercerl/node"
+            "use":"@vercerl/node"
         }
     ],
     "routes":[
