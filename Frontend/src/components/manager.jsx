@@ -2,11 +2,10 @@ import { v4 as uuidv4 } from "uuid";
 import { useRef, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-const apiUrl = import.meta.env.VITE_API_URL
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const manager = () => {
-  const eyebtn = useRef("");
-  const [eye, setEye] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setform] = useState({ url: "", username: "", password: "" });
   const [passwordArray, setpasswordArray] = useState([]);
 
@@ -20,17 +19,8 @@ const manager = () => {
     getPasswords();
   }, []);
 
-  const showPassword = (e) => {
-    if (eye) {
-      J;
-      eyebtn.current.className = "fa-solid fa-eye-slash cursor-pointer";
-      e.target.parentElement.firstChild.type = "password";
-      setEye(false);
-    } else {
-      eyebtn.current.className = "fa-solid fa-eye cursor-pointer";
-      e.target.parentElement.firstChild.type = "text";
-      setEye(true);
-    }
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const savePassword = async () => {
@@ -131,16 +121,17 @@ const manager = () => {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="w-full outline-none"
               />
-              <i
-                onClick={(e) => {
-                  showPassword(e);
-                }}
-                ref={eyebtn}
-                className="fa-solid fa-eye-slash cursor-pointer"
-              ></i>
+              <i onClick={toggleShowPassword}>
+                {" "}
+                {showPassword ? (
+                  <i className="fa-solid fa-eye-slash cursor-pointer" />
+                ) : (
+                  <i className="fa-solid fa-eye cursor-pointer" />
+                )}
+              </i>
             </div>
           </div>
 
